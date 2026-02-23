@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Header, Footer } from "@/components/layout";
-import { CursorDroplet } from "@/components/motion";
+import { CursorDroplet, ScrollProgressBar, PageTransitionWrapper } from "@/components/motion";
 
 export const metadata: Metadata = {
   title: "METAFLORA* XProject — pet projects & micro saas showcase",
@@ -19,8 +19,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <CursorDroplet />
+        <ScrollProgressBar />
         <Header />
-        <main>{children}</main>
+        <main>
+          <PageTransitionWrapper>{children}</PageTransitionWrapper>
+        </main>
         <Footer />
       </body>
     </html>

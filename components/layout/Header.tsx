@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion, AnimatePresence } from "motion/react";
 
 const NAV_ITEMS = [
   { label: "home", href: "/", active: true },
@@ -10,7 +11,7 @@ const NAV_ITEMS = [
   { label: "about", href: "#", active: false },
 ] as const;
 
-export function Header(){
+export function Header() {
   const pathname = usePathname();
 
   return (
@@ -22,9 +23,9 @@ export function Header(){
         width: "100%",
         height: 88,
         zIndex: 1000,
-        background: "rgba(0,0,0,0.6)",
-        backdropFilter: "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
+        background: "transparent",
+        backdropFilter: "blur(8px)",
+        WebkitBackdropFilter: "blur(8px)",
       }}
     >
       <div
@@ -39,24 +40,38 @@ export function Header(){
           justifyContent: "space-between",
         }}
       >
-        {/* Logo */}
-        <Link href="/" className="group flex flex-col leading-none">
+        {/* Logo — shifted -20px from grid start */}
+        <Link href="/" style={{ marginLeft: -20, display: "flex", flexDirection: "column", lineHeight: 1, textDecoration: "none" }}>
           <span
-            className="text-[13px] font-light tracking-[0.25em] text-[#f5f5f0] uppercase opacity-90 group-hover:opacity-100 transition-opacity"
-            style={{ fontFamily: "var(--font-sans)" }}
+            style={{
+              fontFamily: "var(--font-sans)",
+              fontSize: 13,
+              fontWeight: 300,
+              letterSpacing: "0.25em",
+              color: "#f5f5f0",
+              textTransform: "uppercase",
+              opacity: 0.9,
+            }}
           >
             МЕТАФЛОРА*
           </span>
           <span
-            className="text-[11px] font-light tracking-[0.35em] text-[#f5f5f0] uppercase opacity-50 group-hover:opacity-70 transition-opacity"
-            style={{ fontFamily: "var(--font-sans)" }}
+            style={{
+              fontFamily: "var(--font-sans)",
+              fontSize: 11,
+              fontWeight: 300,
+              letterSpacing: "0.35em",
+              color: "#f5f5f0",
+              textTransform: "uppercase",
+              opacity: 0.5,
+            }}
           >
             XProject
           </span>
         </Link>
 
         {/* Navigation */}
-        <nav className="flex items-center gap-8">
+        <nav style={{ display: "flex", alignItems: "center", gap: 32 }}>
           {NAV_ITEMS.map((item) => {
             const isCurrentPage =
               item.href === "/"
@@ -67,8 +82,15 @@ export function Header(){
               return (
                 <span
                   key={item.label}
-                  className="relative text-[13px] font-light tracking-[0.15em] text-[#f5f5f0] opacity-25 uppercase"
                   title="coming soon"
+                  style={{
+                    fontSize: 13,
+                    fontWeight: 300,
+                    letterSpacing: "0.15em",
+                    color: "#f5f5f0",
+                    opacity: 0.25,
+                    textTransform: "uppercase",
+                  }}
                 >
                   {item.label}
                 </span>
@@ -79,18 +101,45 @@ export function Header(){
               <Link
                 key={item.label}
                 href={item.href}
-                className="relative text-[13px] font-light tracking-[0.15em] text-[#f5f5f0] uppercase group"
+                style={{ position: "relative", display: "inline-block", textDecoration: "none" }}
               >
-                <span
-                  className={`transition-opacity ${
-                    isCurrentPage ? "opacity-100" : "opacity-50 hover:opacity-90"
-                  }`}
+                <motion.span
+                  style={{
+                    fontSize: 13,
+                    fontWeight: 300,
+                    letterSpacing: "0.15em",
+                    color: "#f5f5f0",
+                    textTransform: "uppercase",
+                    display: "block",
+                    paddingBottom: 6,
+                  }}
+                  animate={{ opacity: isCurrentPage ? 1 : 0.5 }}
+                  whileHover={{ opacity: 0.9 }}
+                  transition={{ duration: 0.15 }}
                 >
                   {item.label}
-                </span>
-                {isCurrentPage && (
-                  <span className="absolute -bottom-1 left-0 w-full h-px bg-[#f5f5f0] opacity-60" />
-                )}
+                </motion.span>
+                <AnimatePresence>
+                  {isCurrentPage && (
+                    <motion.span
+                      layoutId="nav-underline"
+                      initial={{ scaleX: 0, opacity: 0 }}
+                      animate={{ scaleX: 1, opacity: 0.7 }}
+                      exit={{ scaleX: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                      style={{
+                        position: "absolute",
+                        bottom: 0,
+                        left: 0,
+                        width: "100%",
+                        height: 1,
+                        background: "#f5f5f0",
+                        transformOrigin: "left center",
+                        display: "block",
+                      }}
+                    />
+                  )}
+                </AnimatePresence>
               </Link>
             );
           })}

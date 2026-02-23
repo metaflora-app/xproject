@@ -16,23 +16,22 @@ export function OutlineButton({
   href,
   variant = "secondary",
   className = "",
-}: OutlineButtonProps){
+}: OutlineButtonProps) {
   const fillProgress = useMotionValue(0);
   const bgColor = useTransform(
     fillProgress,
     [0, 1],
-    ["rgba(245,245,240,0)", "rgba(245,245,240,1)"]
+    ["rgba(255,255,255,0)", "rgba(255,255,255,1)"]
   );
   const textColor = useTransform(
     fillProgress,
     [0, 0.5, 1],
-    ["rgba(245,245,240,1)", "rgba(245,245,240,0.5)", "rgba(10,10,10,1)"]
+    ["rgba(255,255,255,1)", "rgba(255,255,255,0.5)", "rgba(0,0,0,1)"]
   );
 
   const handleMouseEnter = () => {
     animate(fillProgress, 1, { duration: 0.25, ease: [0.0, 0.0, 0.2, 1.0] });
   };
-
   const handleMouseLeave = () => {
     animate(fillProgress, 0, { duration: 0.2, ease: [0.4, 0.0, 1.0, 1.0] });
   };
@@ -41,27 +40,32 @@ export function OutlineButton({
     const content = (
       <motion.button
         onClick={onClick}
-        onMouseEnter={() =>
-          animate(fillProgress, 0.15, { duration: 0.25 })
-        }
-        onMouseLeave={() =>
-          animate(fillProgress, 0, { duration: 0.2 })
-        }
-        className={`inline-flex items-center justify-center h-12 px-6 rounded-full bg-[#f5f5f0] text-[#0a0a0a] transition-opacity hover:opacity-90 ${className}`}
-        style={{ fontWeight: 600, fontSize: 16, letterSpacing: "0.06em", textTransform: "uppercase" }}
         whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
+        whileTap={{ scale: 0.97 }}
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: 48,
+          paddingLeft: 24,
+          paddingRight: 24,
+          borderRadius: 999,
+          background: "#f5f5f0",
+          color: "#0a0a0a",
+          border: "1px solid #f5f5f0",
+          fontWeight: 600,
+          fontSize: 16,
+          letterSpacing: "0.06em",
+          textTransform: "uppercase",
+          cursor: "pointer",
+          whiteSpace: "nowrap",
+        }}
+        className={className}
       >
         {children}
       </motion.button>
     );
-    if (href) {
-      return (
-        <a href={href} className="inline-block">
-          {content}
-        </a>
-      );
-    }
+    if (href) return <a href={href} style={{ display: "inline-block" }}>{content}</a>;
     return content;
   }
 
@@ -69,51 +73,74 @@ export function OutlineButton({
     const content = (
       <motion.button
         onClick={onClick}
-        className={`inline-flex items-center justify-center h-12 px-2 text-[#f5f5f0] opacity-60 hover:opacity-100 transition-opacity ${className}`}
-        style={{ fontWeight: 600, fontSize: 16, letterSpacing: "0.06em", textTransform: "uppercase" }}
-        whileHover={{ x: -4 }}
-        whileTap={{ scale: 0.98 }}
+        whileHover={{ opacity: 1 }}
+        whileTap={{ scale: 0.97 }}
+        style={{
+          display: "inline-flex",
+          alignItems: "center",
+          justifyContent: "center",
+          height: 48,
+          paddingLeft: 8,
+          paddingRight: 8,
+          background: "none",
+          border: "none",
+          color: "#f5f5f0",
+          opacity: 0.5,
+          fontWeight: 600,
+          fontSize: 16,
+          letterSpacing: "0.06em",
+          textTransform: "uppercase",
+          cursor: "pointer",
+        }}
+        className={className}
       >
         {children}
       </motion.button>
     );
-    if (href) {
-      return (
-        <a href={href} className="inline-block">
-          {content}
-        </a>
-      );
-    }
+    if (href) return <a href={href} style={{ display: "inline-block" }}>{content}</a>;
     return content;
   }
 
-  // Secondary: outline with fill animation
+  // Secondary: outline → white fill on hover
   const content = (
     <motion.button
       onClick={onClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`relative inline-flex items-center justify-center h-12 px-6 rounded-full border border-[rgba(245,245,240,0.5)] overflow-hidden ${className}`}
-      style={{ fontWeight: 600, fontSize: 16, letterSpacing: "0.06em", textTransform: "uppercase", color: textColor }}
-      whileTap={{ scale: 0.98 }}
+      whileTap={{ scale: 0.97 }}
+      style={{
+        position: "relative",
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: 48,
+        paddingLeft: 24,
+        paddingRight: 24,
+        borderRadius: 999,
+        border: "1px solid rgba(255,255,255,0.5)",
+        overflow: "hidden",
+        background: "transparent",
+        fontWeight: 600,
+        fontSize: 16,
+        letterSpacing: "0.06em",
+        textTransform: "uppercase",
+        cursor: "pointer",
+        color: textColor,
+        whiteSpace: "nowrap",
+      }}
+      className={className}
     >
       <motion.span
-        className="absolute inset-0 rounded-full"
         style={{
+          position: "absolute",
+          inset: 0,
           background: bgColor,
           originX: "0%",
         }}
       />
-      <span className="relative z-10">{children}</span>
+      <span style={{ position: "relative", zIndex: 10 }}>{children}</span>
     </motion.button>
   );
-
-  if (href) {
-    return (
-      <a href={href} className="inline-block">
-        {content}
-      </a>
-    );
-  }
+  if (href) return <a href={href} style={{ display: "inline-block" }}>{content}</a>;
   return content;
 }
