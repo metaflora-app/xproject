@@ -103,46 +103,6 @@ metaflora-xproject/
 
 ---
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18.17 or later
-- npm (or yarn / pnpm / bun)
-
-### Installation
-
-```bash
-git clone https://github.com/metaflora-app/xproject.git
-cd xproject
-npm install
-```
-
-### Development Server
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-The dev server runs with Turbopack for fast refresh.
-
-### Production Build
-
-```bash
-npm run build
-npm run start
-```
-
-### Lint
-
-```bash
-npm run lint
-```
-
----
-
 ## Projects in the Showcase
 
 ### terraloop — pet project
