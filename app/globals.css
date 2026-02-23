@@ -1,26 +1,109 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500&display=swap");
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* ─── METAFLORA* Brand Tokens ─── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Colors */
+  --color-mf-black: #0a0a0a;
+  --color-mf-white: #f5f5f0;
+  --color-mf-offwhite: #ede8e0;
+  --color-mf-gray-100: #e8e3db;
+  --color-mf-gray-200: #c8c3bb;
+  --color-mf-gray-400: #7a7570;
+  --color-mf-gray-600: #3a3530;
+  --color-mf-gray-800: #1a1510;
+  --color-mf-accent: #b8a898;
+  --color-background: #0a0a0a;
+  --color-foreground: rgba(255,255,255,0.85);
+
+  /* Typography */
+  --font-heading: "Bebas Neue", "Impact", sans-serif;
+  --font-sans: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+
+  /* Spacing (8px grid) */
+  --spacing-1: 8px;
+  --spacing-2: 16px;
+  --spacing-3: 24px;
+  --spacing-4: 32px;
+  --spacing-5: 40px;
+  --spacing-6: 48px;
+  --spacing-7: 56px;
+  --spacing-8: 64px;
+  --spacing-9: 72px;
+  --spacing-10: 80px;
+
+  /* Layout */
+  --max-w-viewport: 1280px;
+  --max-w-content: 1160px;
+  --px-content: 60px;
+
+  /* Transitions */
+  --duration-fast: 200ms;
+  --duration-normal: 300ms;
+  --duration-slow: 600ms;
+  --ease-out: cubic-bezier(0.0, 0.0, 0.2, 1.0);
+  --ease-in-out: cubic-bezier(0.4, 0.0, 0.2, 1.0);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Base ─── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-mf-black);
+  color: rgba(255,255,255,0.85);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  cursor: none;
+  overflow-x: hidden;
+  padding-top: 88px;
+}
+
+/* ─── Custom cursor ─── */
+* {
+  cursor: none !important;
+}
+
+/* ─── Selection ─── */
+::selection {
+  background-color: rgba(245, 245, 240, 0.15);
+  color: var(--color-mf-white);
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-mf-black);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-mf-gray-600);
+  border-radius: 2px;
+}
+
+/* ─── Video overlay ─── */
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(10,10,10,0.5) 0%, rgba(10,10,10,0.3) 50%, rgba(10,10,10,0.7) 100%);
+}
+
+/* ─── Typography helpers ─── */
+.font-heading {
+  font-family: var(--font-heading);
+  letter-spacing: 0.02em;
+}
+
+.font-body {
+  font-family: var(--font-sans);
 }
